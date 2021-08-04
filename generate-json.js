@@ -76,7 +76,7 @@ const stream = parse({ delimiter: ',' })
         // write eventInfo
         writeEvent();
       }
-      fs.writeFileSync("./events.json", JSON.stringify(allEvents));
+      fs.writeFileSync("../events.json", JSON.stringify(allEvents));
     });
 stream.write(fs.readFileSync("./events.csv"));
 stream.end();
