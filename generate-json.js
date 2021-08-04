@@ -31,6 +31,7 @@ const stream = parse({ delimiter: ',' })
           }
 
           currentEvent = row[1].toLowerCase().trim();
+          eventInfo.code = currentEvent;
         } else if (info === "state") {
           eventInfo.state = row[1].trim();
           // todo: check for valid state name
@@ -46,14 +47,26 @@ const stream = parse({ delimiter: ',' })
           eventInfo.hybrid = true;
         } else if (info === "coi") {
           eventInfo.coi = true;
+        } else if (info === "block") {
+          // array of blockers
+        } else if (info === "proposals") {
+          // array of proposed plans
+        } else if (info === "direct_to_portal") {
+          eventInfo.direct_to_portal = true;
         } else if (info === "partner-a-link") {
-          eventInfo.coi = row[1].trim();
+          eventInfo.partnerAlink = row[1].trim();
         } else if (info === "partner-a-image") {
-          eventInfo.coi = row[1].trim();
+          eventInfo.partnerAimage = row[1].trim();
         } else if (info === "partner-a-color") {
-          eventInfo.coi = row[1].trim();
+          eventInfo.partnerAcolor = row[1].trim();
         } else if (info === "partner-b") {
           eventInfo.partnerB = row[1].trim();
+        } else if (info === "partner-b-link") {
+          eventInfo.partnerBlink = row[1].trim();
+        } else if (info === "partner-b-image") {
+          eventInfo.partnerBimage = row[1].trim();
+        } else if (info === "partner-b-color") {
+          eventInfo.partnerBcolor = row[1].trim();
         }
       }
     })
@@ -63,7 +76,7 @@ const stream = parse({ delimiter: ',' })
         // write eventInfo
         writeEvent();
       }
-      console.log(allEvents);
+      fs.writeFileSync("./events.json", JSON.stringify(allEvents));
     });
 stream.write(fs.readFileSync("./events.csv"));
 stream.end();
